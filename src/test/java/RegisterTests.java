@@ -9,7 +9,7 @@ public class RegisterTests extends BaseTest {
     LoginPage loginPage = new LoginPage();
     AccountCreatedPage accountCreatedPage = new AccountCreatedPage();
     DeleteAccountPage deleteAccountPage = new DeleteAccountPage();
-    @Test(description = "User Create Control")
+    @Test(description = "User Signup Control")
     public void signupControl(){
         String userEmail2 = createEmail();
         homePage.verifyHomePageIsVisible("Full-Fledged practice website for Automation Engineers");
@@ -17,6 +17,7 @@ public class RegisterTests extends BaseTest {
                 .fillSignupName("Anas")
                 .fillSignupEmail(userEmail2)
                 .clickSignup()
+                .verifyAccountInformation("Enter Account Information")
                 .checkGender()
                 .fillSignupPassword("test123")
                 .fillSignupDay("21")
@@ -41,5 +42,17 @@ public class RegisterTests extends BaseTest {
         deleteAccountPage.verifyDeletedAccountIsVisible("ACCOUNT DELETED!")
                 .clickContinue();
     }
-    
+    // testUser@hotmaail.com , test123 , Anas
+    @Test(description = "Signup with existing email Control")
+    public void registerWithExistingEmail(){
+        homePage.verifyHomePageIsVisible("Full-Fledged practice website for Automation Engineers")
+                .moveToRegisterAndLoginPage();
+        loginPage.verifyLoginToYourAccount("New User Signup!");
+        registerPage.fillSignupName("Anas")
+                .fillSignupEmail("testUser@hotmaail.com")
+                .clickSignup();
+        loginPage.emailAddressAlready("Email Address already exist!");
+
+    }
+
 }
